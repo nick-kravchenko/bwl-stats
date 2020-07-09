@@ -7,7 +7,7 @@
     <style>
         .row {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
+            grid-template-columns: repeat(10, 1fr);
             grid-gap: 20px;
         }
         .col-1 {
@@ -28,20 +28,34 @@
         .col-6 {
             grid-column: span 6;
         }
+        .col-7 {
+            grid-column: span 7;
+        }
+        .col-8 {
+            grid-column: span 8;
+        }
+        .col-9 {
+            grid-column: span 9;
+        }
+        .col-10 {
+            grid-column: span 10;
+        }
     </style>
 </head>
 <body>
     <div class="row">
+        <div class="col-2"></div>
         <div class="col-5">
             <h5>Boss kill speed</h5>
             <canvas id="boss_kill_speed" width="800" height="400"></canvas>
         </div>
-        <div class="col-1">
+        <div class="col-2">
             <label for="chart_type_line"><input type="radio" name="chart_type" id="chart_type_line" value="line" checked> Line</label>
             <label for="chart_type_bar"><input type="radio" name="chart_type" id="chart_type_bar" value="bar"> Bar</label>
         </div>
     </div>
     <div class="row">
+        <div class="col-2"></div>
         <div class="col-5">
             <h5>Thd dps</h5>
             <canvas id="thd_dps" width="800" height="400"></canvas>
