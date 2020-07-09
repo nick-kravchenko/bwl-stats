@@ -32,13 +32,17 @@
 </head>
 <body>
     <div class="row">
-        <div class="col-4">
+        <div class="col-5">
             <h5>Boss kill speed</h5>
             <canvas id="boss_kill_speed" width="800" height="400"></canvas>
         </div>
+        <div class="col-1">
+            <label for="chart_type_line"><input type="radio" name="chart_type" id="chart_type_line" value="line" checked> Line</label>
+            <label for="chart_type_bar"><input type="radio" name="chart_type" id="chart_type_bar" value="bar"> Bar</label>
+        </div>
     </div>
     <div class="row">
-        <div class="col-4">
+        <div class="col-5">
             <h5>Thd dps</h5>
             <canvas id="thd_dps" width="800" height="400"></canvas>
         </div>
@@ -46,6 +50,12 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script>
+        function randomColor() {
+            const r = Math.round (Math.random () * 255);
+            const g = Math.round (Math.random () * 255);
+            const b = Math.round (Math.random () * 255);
+            return `rgba(${r}, ${g}, ${b}, .5)`;
+        }
         const colorArray = [
             "#63b598", "#ce7d78", "#ea9e70", "#a48a9e", "#c6e1e8", "#648177" ,"#0d5ac1" ,
             "#f205e6" ,"#1c0365" ,"#14a9ad" ,"#4ca2f9" ,"#a4e43f" ,"#d298e2" ,"#6119d0",
@@ -98,215 +108,138 @@
             'Хроммагус',
             'Нефариан',
         ];
-        const data = {
+        const stats = {
             '14.05.2020': {
-                'Бритвосмерт Неукротимый': 22,
-                'Валестраз Порочный': 36,
-                'Предводитель драконов Разящий Бич': 67,
-                'Огнечрев': 137,
-                'Черноскал': 115,
-                'Пламегор': 82,
-                'Хроммагус': 215,
-                'Нефариан': 173,
+                'Бритвосмерт Неукротимый': { speed: 22, dps: 895, },
+                'Валестраз Порочный': { speed: 36, dps: 1433, },
+                'Предводитель драконов Разящий Бич': { speed: 67, dps: 843, },
+                'Огнечрев': { speed: 137, dps: 208, },
+                'Черноскал': { speed: 115, dps: 520, },
+                'Пламегор': { speed: 82, dps: 667, },
+                'Хроммагус': { speed: 215, dps: 520, },
+                'Нефариан': { speed: 173, dps: 663, },
+                'Overall': { speed: NaN, dps: 424, },
             },
             '21.05.2020': {
-                'Бритвосмерт Неукротимый': 25,
-                'Валестраз Порочный': 36,
-                'Предводитель драконов Разящий Бич': 62,
-                'Огнечрев': 105,
-                'Черноскал': 97,
-                'Пламегор': 72,
-                'Хроммагус': 140,
-                'Нефариан': 185,
+                'Бритвосмерт Неукротимый': { speed: 25, dps: 769, },
+                'Валестраз Порочный': { speed: 36, dps: 1401, },
+                'Предводитель драконов Разящий Бич': { speed: 62, dps: 567, },
+                'Огнечрев': { speed: 105, dps: 513, },
+                'Черноскал': { speed: 97, dps: 527, },
+                'Пламегор': { speed: 72, dps: 569, },
+                'Хроммагус': { speed: 140, dps: 416, },
+                'Нефариан': { speed: 185, dps: 468, },
+                'Overall': { speed: NaN, dps: 548, },
             },
             '28.05.2020': {
-                'Бритвосмерт Неукротимый': 20,
-                'Валестраз Порочный': 32,
-                'Предводитель драконов Разящий Бич': 66,
-                'Огнечрев': 81,
-                'Черноскал': 67,
-                'Пламегор': 59,
-                'Хроммагус': 202,
-                'Нефариан': 170,
+                'Бритвосмерт Неукротимый': { speed: 20, dps: 857, },
+                'Валестраз Порочный': { speed: 32, dps: 1451, },
+                'Предводитель драконов Разящий Бич': { speed: 66, dps: 573, },
+                'Огнечрев': { speed: 81, dps: 481, },
+                'Черноскал': { speed: 67, dps: 822, },
+                'Пламегор': { speed: 59, dps: 741, },
+                'Хроммагус': { speed: 202, dps: 375, },
+                'Нефариан': { speed: 170, dps: 554, },
+                'Overall': { speed: NaN, dps: 588, },
             },
             '08.06.2020': {
-                'Бритвосмерт Неукротимый': 17,
-                'Валестраз Порочный': 25,
-                'Предводитель драконов Разящий Бич': 41,
-                'Огнечрев': 43,
-                'Черноскал': 52,
-                'Пламегор': 45,
-                'Хроммагус': 92,
-                'Нефариан': 87,
+                'Бритвосмерт Неукротимый': { speed: 17, dps: 732, },
+                'Валестраз Порочный': { speed: 25, dps: 1383, },
+                'Предводитель драконов Разящий Бич': { speed: 41, dps: 792, },
+                'Огнечрев': { speed: 43, dps: 981, },
+                'Черноскал': { speed: 52, dps: 983, },
+                'Пламегор': { speed: 45, dps: 829, },
+                'Хроммагус': { speed: 92, dps: 687, },
+                'Нефариан': { speed: 87, dps: 1172, },
+                'Overall': { speed: NaN, dps: 933, },
             },
             '11.06.2020': {
-                'Бритвосмерт Неукротимый': 15,
-                'Валестраз Порочный': 25,
-                'Предводитель драконов Разящий Бич': 48,
-                'Огнечрев': 149,
-                'Черноскал': 104,
-                'Пламегор': 72,
-                'Хроммагус': 157,
-                'Нефариан': 173,
+                'Бритвосмерт Неукротимый': { speed: 15, dps: 1174, },
+                'Валестраз Порочный': { speed: 25, dps: 2060, },
+                'Предводитель драконов Разящий Бич': { speed: 48, dps: 690, },
+                'Огнечрев': { speed: 149, dps: 304, },
+                'Черноскал': { speed: 104, dps: 560, },
+                'Пламегор': { speed: 72, dps: 505, },
+                'Хроммагус': { speed: 157, dps: 476, },
+                'Нефариан': { speed: 173, dps: 609, },
+                'Overall': { speed: NaN, dps: 506, },
             },
             '18.06.2020': {
-                'Бритвосмерт Неукротимый': 15,
-                'Валестраз Порочный': 25,
-                'Предводитель драконов Разящий Бич': 57,
-                'Огнечрев': 75,
-                'Черноскал': 68,
-                'Пламегор': 69,
-                'Хроммагус': 167,
-                'Нефариан': 169,
+                'Бритвосмерт Неукротимый': { speed: 15, dps: 805, },
+                'Валестраз Порочный': { speed: 25, dps: 1622, },
+                'Предводитель драконов Разящий Бич': { speed: 57, dps: 657, },
+                'Огнечрев': { speed: 75, dps: 807, },
+                'Черноскал': { speed: 68, dps: 709, },
+                'Пламегор': { speed: 69, dps: 660, },
+                'Хроммагус': { speed: 167, dps: 134, },
+                'Нефариан': { speed: 169, dps: 489, },
+                'Overall': { speed: NaN, dps: 544, },
             },
             '25.06.2020': {
-                'Бритвосмерт Неукротимый': 18,
-                'Валестраз Порочный': 27,
-                'Предводитель драконов Разящий Бич': 53,
-                'Огнечрев': 74,
-                'Черноскал': 65,
-                'Пламегор': 53,
-                'Хроммагус': 110,
-                'Нефариан': 209,
+                'Бритвосмерт Неукротимый': { speed: 18, dps: 1277, },
+                'Валестраз Порочный': { speed: 27, dps: 2221, },
+                'Предводитель драконов Разящий Бич': { speed: 53, dps: 723, },
+                'Огнечрев': { speed: 74, dps: 681, },
+                'Черноскал': { speed: 65, dps: 550, },
+                'Пламегор': { speed: 53, dps: 496, },
+                'Хроммагус': { speed: 110, dps: 606, },
+                'Нефариан': { speed: 209, dps: 87, },
+                'Overall': { speed: NaN, dps: 497, },
             },
             '07.07.2020': {
-                'Бритвосмерт Неукротимый': 16,
-                'Валестраз Порочный': 26,
-                'Предводитель драконов Разящий Бич': 46,
-                'Огнечрев': 61,
-                'Черноскал': 67,
-                'Пламегор': 63,
-                'Хроммагус': 117,
-                'Нефариан': 126,
+                'Бритвосмерт Неукротимый': { speed: 16, dps: 1623, },
+                'Валестраз Порочный': { speed: 26, dps: 1876, },
+                'Предводитель драконов Разящий Бич': { speed: 46, dps: 570, },
+                'Огнечрев': { speed: 61, dps: 692, },
+                'Черноскал': { speed: 67, dps: 633, },
+                'Пламегор': { speed: 63, dps: 654, },
+                'Хроммагус': { speed: 117, dps: 718, },
+                'Нефариан': { speed: 126, dps: 702, },
+                'Overall': { speed: NaN, dps: 766, },
             },
         };
-        const thdDpsData = {
-            '14.05.2020': {
-                'Бритвосмерт Неукротимый': 895,
-                'Валестраз Порочный': 1433,
-                'Предводитель драконов Разящий Бич': 843,
-                'Огнечрев': 208,
-                'Черноскал': 520,
-                'Пламегор': 667,
-                'Хроммагус': 520,
-                'Нефариан': 663,
-                'Overall': 424,
-            },
-            '21.05.2020': {
-                'Бритвосмерт Неукротимый': 769,
-                'Валестраз Порочный': 1401,
-                'Предводитель драконов Разящий Бич': 567,
-                'Огнечрев': 513,
-                'Черноскал': 527,
-                'Пламегор': 569,
-                'Хроммагус': 416,
-                'Нефариан': 468,
-                'Overall': 548,
-            },
-            '28.05.2020': {
-                'Бритвосмерт Неукротимый': 857,
-                'Валестраз Порочный': 1451,
-                'Предводитель драконов Разящий Бич': 573,
-                'Огнечрев': 481,
-                'Черноскал': 822,
-                'Пламегор': 741,
-                'Хроммагус': 375,
-                'Нефариан': 554,
-                'Overall': 588,
-            },
-            '08.06.2020': {
-                'Бритвосмерт Неукротимый': 732,
-                'Валестраз Порочный': 1383,
-                'Предводитель драконов Разящий Бич': 792,
-                'Огнечрев': 981,
-                'Черноскал': 983,
-                'Пламегор': 829,
-                'Хроммагус': 687,
-                'Нефариан': 1172,
-                'Overall': 933,
-            },
-            '11.06.2020': {
-                'Бритвосмерт Неукротимый': 1174,
-                'Валестраз Порочный': 2060,
-                'Предводитель драконов Разящий Бич': 690,
-                'Огнечрев': 304,
-                'Черноскал': 560,
-                'Пламегор': 505,
-                'Хроммагус': 476,
-                'Нефариан': 609,
-                'Overall': 506,
-            },
-            '18.06.2020': {
-                'Бритвосмерт Неукротимый': 805,
-                'Валестраз Порочный': 1622,
-                'Предводитель драконов Разящий Бич': 657,
-                'Огнечрев': 807,
-                'Черноскал': 709,
-                'Пламегор': 660,
-                'Хроммагус': 134,
-                'Нефариан': 489,
-                'Overall': 544,
-            },
-            '25.06.2020': {
-                'Бритвосмерт Неукротимый': 1277,
-                'Валестраз Порочный': 2221,
-                'Предводитель драконов Разящий Бич': 723,
-                'Огнечрев': 681,
-                'Черноскал': 550,
-                'Пламегор': 496,
-                'Хроммагус': 606,
-                'Нефариан': 87,
-                'Overall': 497,
-            },
-            '07.07.2020': {
-                'Бритвосмерт Неукротимый': 1623,
-                'Валестраз Порочный': 1876,
-                'Предводитель драконов Разящий Бич': 570,
-                'Огнечрев': 692,
-                'Черноскал': 633,
-                'Пламегор': 654,
-                'Хроммагус': 718,
-                'Нефариан': 702,
-                'Overall': 766,
-            },
-        };
-        const datasets = Object.keys(data).map((date, index) => {            
+        const datasets = Object.keys(stats).map((date, index) => {            
             return {
                 label: date,
                 backgroundColor: colorArray[index],
                 borderColor: colorArray[index],
                 fill: false,
-                data: Object.values(data[date]),
+                data: Object.values(stats[date]).map(obj => obj.speed),
             }
         });
-        const thd_dps_datasets = Object.keys(thdDpsData).map((date, index) => {            
+        const thd_dps_datasets = Object.keys(stats).map((date, index) => {            
             return {
                 label: date,
                 backgroundColor: colorArray[index],
                 borderColor: colorArray[index],
                 fill: false,
-                data: Object.values(thdDpsData[date]),
+                data: Object.values(stats[date]).map(obj => obj.dps),
             }
         });
     </script>
     <script>
         var boss_kill_speed_ctx = document.getElementById('boss_kill_speed').getContext('2d');
-        var boss_kill_speedChart = new Chart(boss_kill_speed_ctx, {
-            title: 'wtf',
+        const boss_kill_speedChartConfig = {
             type: 'line',
             data: {
-                labels,
-                datasets,
+                labels: labels,
+                datasets: datasets,
             },
             options: {
                 legend: {
                     position: 'left',
                     align: 'start',
                 },
+                scales: {
+                    xAxes: [{
+                        offset: true,
+                    }]
+                }
             }
-        });
+        };
+        var boss_kill_speedChart = new Chart(boss_kill_speed_ctx, boss_kill_speedChartConfig);
         var thd_dps_ctx = document.getElementById('thd_dps').getContext('2d');
-        var thd_dpsChart = new Chart(thd_dps_ctx, {
+        const thd_dpsChartConfig = {
             type: 'line',
             data: {
                 labels: [...labels, 'Overall'],
@@ -317,7 +250,22 @@
                     position: 'left',
                     align: 'start',
                 },
+                scales: {
+                    xAxes: [{
+                        offset: true,
+                    }]
+                }
             }
+        };
+        var thd_dpsChart = new Chart(thd_dps_ctx, thd_dpsChartConfig);
+        document.querySelectorAll('input[name="chart_type"]').forEach(input => {
+            input.addEventListener('change', (event) => {
+                boss_kill_speedChart.destroy();
+                boss_kill_speedChart = new Chart(boss_kill_speed_ctx, {...boss_kill_speedChartConfig, type: event.target.value});
+                thd_dpsChart.destroy();
+                thd_dpsChart = new Chart(thd_dps_ctx, {...thd_dpsChartConfig, type: event.target.value});
+                console.log(event.target.value);
+            });
         });
     </script>
 </body>
