@@ -68,7 +68,7 @@
         let url = 'https://nick-kravchenko.github.io/bwl-stats/data.csv';
 
         fetch(url)
-        .then(res => res.json())
+        .then(res => res.text())
         .then((out) => {
           console.log('Checkout this JSON! ', out);
         })
