@@ -65,6 +65,14 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script>
+        let url = 'https://github.com/nick-kravchenko/bwl-stats/blob/master/data.csv';
+
+        fetch(url)
+        .then(res => res.json())
+        .then((out) => {
+          console.log('Checkout this JSON! ', out);
+        })
+        .catch(err => { throw err });
         function randomColor() {
             const r = Math.round (Math.random () * 255);
             const g = Math.round (Math.random () * 255);
