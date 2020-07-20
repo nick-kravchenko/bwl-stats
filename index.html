@@ -70,7 +70,38 @@
         fetch(url)
         .then(res => res.text())
         .then((out) => {
-          console.log('Checkout this JSON! ', out);
+            const rows = out.split(/\n|\r\n/).map(row => row.split(','));
+            let latest_table_title;
+            const result = rows.reduce((acc, row) => {
+              const isTableTitle = !row[0] && !row[row.length - 1];
+              let row_title, values;
+
+              if (isTableTitle) {
+                latest_table_title = row.join('');
+              } else {
+                row_title = row.shift();
+                values = [...row];
+                if (acc[latest_table_title]) {
+                  acc[latest_table_title][row_title] = values;
+                } else {
+                  acc[latest_table_title] = { [row_title]: values };
+                }
+              }
+              return acc;
+            }, {});
+            const data = dates.reduce((acc, date, index) => {
+              return {
+                ...acc,
+                [date]: bosses.reduce((ac, boss) => ({
+                  ...ac,
+                  [boss]: Object.keys(result).reduce((a, key) => ({
+                    ...a,
+                    [key]: result[key][boss][index],
+                  }), {}),
+                }), {})
+              }
+            }, {});
+            console.log(data);
         })
         .catch(err => { throw err });
         function randomColor() {
